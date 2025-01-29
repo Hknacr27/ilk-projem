@@ -1,0 +1,22 @@
+name: Yeni Dosya Kontrolü  
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  check-new-files:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Reponun Kopyalanması
+        uses: actions/checkout@v3
+
+      - name: Yeni Dosya Kontrolü
+        run: |
+          if git diff --name-status ${{ github.event.before }} ${{ github.sha }} | grep "^A"; then
+            echo "YENİ DOSYA EKLEDİNİZ BAŞARILI"
+          else
+            echo "Yeni dosya eklenmedi."
+          fi
